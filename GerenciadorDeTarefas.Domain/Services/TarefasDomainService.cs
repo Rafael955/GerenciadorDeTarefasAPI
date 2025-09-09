@@ -78,7 +78,7 @@ namespace GerenciadorDeTarefas.Domain.Services
         {
             var tarefas = tarefasRepository.GetAll();
 
-            if(tarefas != null && tarefas.Count == 0)
+            if(tarefas == null || tarefas.Count == 0)
                 throw new ApplicationException("Nenhuma tarefa foi encontrada!");
 
             List<TarefaResponseDto> tarefasDto = new List<TarefaResponseDto>();
