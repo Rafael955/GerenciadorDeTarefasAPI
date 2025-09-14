@@ -1,10 +1,15 @@
 ﻿using GerenciadorDeTarefas.Domain.Enums;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GerenciadorDeTarefas.Domain.Extensions
+namespace GerenciadorDeTarefas.Application.Extensions
 {
-    public static class StatusTarefaExtensions
+    public static class StatusTarefaExtension
     {
         public static string GetDescription(this StatusTarefa status)
         {

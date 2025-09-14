@@ -1,10 +1,10 @@
-using GerenciadorDeTarefas.Domain.Dtos.Responses;
+ï»¿using GerenciadorDeTarefas.Application.Dtos.Response;
+using GerenciadorDeTarefas.Application.Extensions;
 using GerenciadorDeTarefas.Domain.Entities;
-using GerenciadorDeTarefas.Domain.Extensions;
 
-namespace GerenciadorDeTarefas.Domain.Mappers
+namespace GerenciadorDeTarefas.Application.Mappers
 {
-    public static class TarefaMapper
+    public class TarefaMapper
     {
         public static TarefaResponseDto ToResponse(Tarefa tarefa)
         {
@@ -23,9 +23,9 @@ namespace GerenciadorDeTarefas.Domain.Mappers
                     //Descricao = 
                     //    tarefa.Status == StatusTarefa.Pendente ? "Pendente" :
                     //    tarefa.Status == StatusTarefa.Em_Progresso ? "Em Progresso" :
-                    //    tarefa.Status == StatusTarefa.Concluida ? "Concluída" : 
+                    //    tarefa.Status == StatusTarefa.Concluida ? "ConcluÃ­da" : 
                     //    string.Empty 
-                    //Isto viola o OCP do SOLID pois ao modificar o Enum iria precisar modificar também este método para incluir o novo enum
+                    //Isto viola o OCP do SOLID pois ao modificar o Enum iria precisar modificar tambÃ©m este mÃ©todo para incluir o novo enum
                 }
             };
         }

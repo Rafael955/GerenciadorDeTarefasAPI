@@ -1,15 +1,16 @@
-﻿using Azure.Core;
-using GerenciadorDeTarefas.Domain.Dtos.Requests;
-using GerenciadorDeTarefas.Domain.Dtos.Responses;
-using GerenciadorDeTarefas.Domain.Interfaces.Services;
-using GerenciadorDeTarefas.Domain.Services;
+﻿using GerenciadorDeTarefas.Application.Dtos.Request;
+using GerenciadorDeTarefas.Application.Dtos.Response;
+using GerenciadorDeTarefas.Application.Interfaces.Services;
+using GerenciadorDeTarefas.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace GerenciadorDeTarefas.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TarefasController (ITarefasDomainService tarefasDomainService) : ControllerBase
+    public class TarefasController(ITarefasAppService tarefasAppService) : ControllerBase
     {
         [HttpPost("criar-tarefa")]
         [ProducesResponseType(typeof(TarefaResponseDto), StatusCodes.Status201Created)]
@@ -17,7 +18,7 @@ namespace GerenciadorDeTarefas.Api.Controllers
         {
             try
             {
-                var response = tarefasDomainService.CriarTarefa(request);
+                var response = tarefasAppService.CriarTarefa(request);
 
                 return StatusCode(StatusCodes.Status201Created, response);
             }
@@ -43,7 +44,7 @@ namespace GerenciadorDeTarefas.Api.Controllers
         {
             try
             {
-                var response = tarefasDomainService.AlterarTarefa(id, request);
+                var response = tarefasAppService.AlterarTarefa(id, request);
 
                 return StatusCode(StatusCodes.Status200OK, response);
             }
@@ -69,7 +70,7 @@ namespace GerenciadorDeTarefas.Api.Controllers
         {
             try
             {
-                var response = tarefasDomainService.ExcluirTarefa(id);
+                var response = tarefasAppService.ExcluirTarefa(id);
 
                 return StatusCode(StatusCodes.Status200OK, response);
             }
@@ -89,12 +90,12 @@ namespace GerenciadorDeTarefas.Api.Controllers
             }
         }
 
-        [HttpGet("obter-tarefas/{id}")]
+        [HttpGet("obter-tarefa/{id}")]
         public IActionResult Get(int id)
         {
             try
             {
-                var response = tarefasDomainService.ObterTarefaPorId(id);
+                var response = tarefasAppService.ObterTarefaPorId(id);
 
                 return StatusCode(StatusCodes.Status200OK, response);
             }
@@ -119,7 +120,7 @@ namespace GerenciadorDeTarefas.Api.Controllers
         {
             try
             {
-                var response = tarefasDomainService.ListarTarefas();
+                var response = tarefasAppService.ListarTarefas();
 
                 return StatusCode(StatusCodes.Status200OK, response);
             }
@@ -137,6 +138,24 @@ namespace GerenciadorDeTarefas.Api.Controllers
                     message = ex.Message,
                 });
             }
+        }
+
+        [HttpGet("listar-status-tarefas")]
+        public IActionResult GetAllStatusTasks()
+        {
+            var response = Enum.GetValues(typeof(StatusTarefa))
+                .Cast<StatusTarefa>()
+                .Select(status => new StatusTarefaResponseDto
+                {
+                    Codigo = (int)status,
+                    Descricao = status.GetType()
+                    .GetField(status.ToString())?
+                    .GetCustomAttribute<DescriptionAttribute>()?
+                    .Description ?? status.ToString()
+                })
+                .ToList();
+
+            return StatusCode(StatusCodes.Status200OK, response);
         }
     }
 }

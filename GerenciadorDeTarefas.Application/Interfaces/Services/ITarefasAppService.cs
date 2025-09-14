@@ -1,14 +1,14 @@
-﻿using GerenciadorDeTarefas.Domain.Dtos.Requests;
-using GerenciadorDeTarefas.Domain.Dtos.Responses;
+﻿using GerenciadorDeTarefas.Application.Dtos.Request;
+using GerenciadorDeTarefas.Application.Dtos.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GerenciadorDeTarefas.Domain.Interfaces.Services
+namespace GerenciadorDeTarefas.Application.Interfaces.Services
 {
-    public interface ITarefasDomainService
+    public interface ITarefasAppService
     {
         TarefaResponseDto CriarTarefa(TarefaRequestDto request);
 

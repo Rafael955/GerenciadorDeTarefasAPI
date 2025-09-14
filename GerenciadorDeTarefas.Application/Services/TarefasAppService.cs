@@ -1,35 +1,20 @@
-﻿using GerenciadorDeTarefas.Domain.Dtos.Requests;
-using GerenciadorDeTarefas.Domain.Dtos.Responses;
+﻿using GerenciadorDeTarefas.Application.Dtos.Request;
+using GerenciadorDeTarefas.Application.Dtos.Response;
+using GerenciadorDeTarefas.Application.Interfaces.Services;
+using GerenciadorDeTarefas.Application.Mappers;
 using GerenciadorDeTarefas.Domain.Entities;
-using GerenciadorDeTarefas.Domain.Enums;
-using GerenciadorDeTarefas.Domain.Extensions;
 using GerenciadorDeTarefas.Domain.Interfaces.Repositories;
-using GerenciadorDeTarefas.Domain.Interfaces.Services;
-using GerenciadorDeTarefas.Domain.Mappers;
-using GerenciadorDeTarefas.Domain.Validators;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GerenciadorDeTarefas.Domain.Services
+namespace GerenciadorDeTarefas.Application.Services
 {
-    public class TarefasDomainService (ITarefasRepository tarefasRepository) : ITarefasDomainService
+    public class TarefasAppService(ITarefasRepository tarefasRepository) : ITarefasAppService
     {
         public TarefaResponseDto CriarTarefa(TarefaRequestDto request)
         {
-            TarefaValidator.Validar(request);
+            request.DataCriacao = DateTime.Now;
 
-            var tarefa = new Tarefa
-            {
-                Titulo = request.Titulo,
-                Descricao = request.Descricao,
-                DataCriacao = request.DataCriacao,
-                DataConclusao = request.DataConclusao,
-                Status = (StatusTarefa)request.Status
-            };
-
+            var tarefa = new Tarefa(request.Titulo, request.Descricao, request.DataCriacao, request.DataConclusao, request.Status);
+     
             tarefasRepository.Add(tarefa);
 
             return TarefaMapper.ToResponse(tarefa);
@@ -39,14 +24,8 @@ namespace GerenciadorDeTarefas.Domain.Services
         {
             var tarefa = tarefasRepository.GetById(IdTarefa);
 
-            TarefaValidator.Validar(request);
+            tarefa.AlterarTarefa(request.Titulo, request.Descricao, request.DataCriacao, request.DataConclusao, request.Status);
 
-            tarefa.Titulo = request.Titulo;
-            tarefa.Descricao = request.Descricao;
-            tarefa.DataCriacao = request.DataCriacao;
-            tarefa.DataConclusao = request.DataConclusao;
-            tarefa.Status = (StatusTarefa)request.Status;
-            
             tarefasRepository.Update(tarefa);
 
             return TarefaMapper.ToResponse(tarefa);
@@ -78,7 +57,7 @@ namespace GerenciadorDeTarefas.Domain.Services
         {
             var tarefas = tarefasRepository.GetAll();
 
-            if(tarefas == null || tarefas.Count == 0)
+            if (tarefas == null || tarefas.Count == 0)
                 throw new ApplicationException("Nenhuma tarefa foi encontrada!");
 
             List<TarefaResponseDto> tarefasDto = new List<TarefaResponseDto>();
@@ -91,4 +70,20 @@ namespace GerenciadorDeTarefas.Domain.Services
             return tarefasDto;
         }
     }
+
+    /*O que é o TarefasAppService?
+
+        Ele é um Application Service, ou seja, uma classe que orquestra os casos de uso relacionados a Tarefa.
+
+        👉 Função principal:
+
+        Receber dados vindos da API (DTOs).
+
+        Validar a entrada (quando não for só responsabilidade do DTO/Validator).
+
+        Chamar o Domínio para criar/manipular a entidade (ex.: new Tarefa(...), tarefa.Alterar(...)).
+
+        Usar os Repositórios (interfaces do Domain) para persistir ou buscar dados.
+
+        Retornar DTOs de resposta para a camada Presentation (API).*/
 }

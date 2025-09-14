@@ -1,11 +1,10 @@
-﻿using GerenciadorDeTarefas.Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GerenciadorDeTarefas.Domain.Dtos.Responses
+namespace GerenciadorDeTarefas.Application.Dtos.Response
 {
     public class TarefaResponseDto
     {
@@ -20,13 +19,5 @@ namespace GerenciadorDeTarefas.Domain.Dtos.Responses
         public DateTime? DataConclusao { get; set; }
 
         public required StatusTarefaResponseDto Status { get; set; }
-
-    }
-
-    public class StatusTarefaResponseDto
-    {
-        public required int Codigo { get; set; }
-
-        public required string Descricao { get; set; }
     }
 }

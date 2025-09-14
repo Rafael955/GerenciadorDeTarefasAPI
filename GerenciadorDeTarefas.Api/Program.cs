@@ -1,15 +1,14 @@
 using GerenciadorDeTarefas.Api.Configurations;
-using GerenciadorDeTarefas.Infra.Data.Contexts;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddDbContext();
 
-builder.Services.AddDependencyInjection();
-
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+builder.Services.AddDependencyInjection();
+builder.Services.AddCorsConfiguration();
 
 builder.Services.AddRouting(configureOptions =>
 {
@@ -29,6 +28,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCorsConfiguration();
 
 app.UseAuthorization();
 
