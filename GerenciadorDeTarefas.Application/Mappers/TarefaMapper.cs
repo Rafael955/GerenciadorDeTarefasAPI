@@ -4,9 +4,9 @@ using GerenciadorDeTarefas.Domain.Entities;
 
 namespace GerenciadorDeTarefas.Application.Mappers
 {
-    public class TarefaMapper
+    public static class TarefaMapper
     {
-        public static TarefaResponseDto ToResponse(Tarefa tarefa)
+        public static TarefaResponseDto ToResponse(this Tarefa tarefa)
         {
             return new TarefaResponseDto
             {

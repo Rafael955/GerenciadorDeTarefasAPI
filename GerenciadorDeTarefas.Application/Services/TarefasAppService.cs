@@ -17,7 +17,7 @@ namespace GerenciadorDeTarefas.Application.Services
      
             tarefasRepository.Add(tarefa);
 
-            return TarefaMapper.ToResponse(tarefa);
+            return tarefa.ToResponse();
         }
 
         public TarefaResponseDto AlterarTarefa(int IdTarefa, TarefaRequestDto request)
@@ -28,7 +28,7 @@ namespace GerenciadorDeTarefas.Application.Services
 
             tarefasRepository.Update(tarefa);
 
-            return TarefaMapper.ToResponse(tarefa);
+            return tarefa.ToResponse();
         }
 
         public TarefaResponseDto ExcluirTarefa(int IdTarefa)
@@ -40,7 +40,7 @@ namespace GerenciadorDeTarefas.Application.Services
 
             tarefasRepository.Delete(tarefa);
 
-            return TarefaMapper.ToResponse(tarefa);
+            return tarefa.ToResponse();
         }
 
         public TarefaResponseDto ObterTarefaPorId(int IdTarefa)
@@ -50,7 +50,7 @@ namespace GerenciadorDeTarefas.Application.Services
             if (tarefa == null)
                 throw new ApplicationException("Tarefa não encontrada!");
 
-            return TarefaMapper.ToResponse(tarefa);
+            return tarefa.ToResponse();
         }
 
         public List<TarefaResponseDto>? ListarTarefas()
@@ -64,7 +64,7 @@ namespace GerenciadorDeTarefas.Application.Services
 
             foreach (var tarefa in tarefas)
             {
-                tarefasDto.Add(TarefaMapper.ToResponse(tarefa));
+                tarefasDto.Add(tarefa.ToResponse());
             }
 
             return tarefasDto;
