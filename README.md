@@ -51,7 +51,7 @@ dotnet ef database update --project GerenciadorDeTarefas.Infra.Data --startup-pr
 
 1. **Execute a API:**
 
-dotnet test
+dotnet run
 
 ---
 
@@ -70,8 +70,9 @@ CREATE TABLE [dbo].[TAREFA] ( [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY, [Titu
 
 ## Estrutura do Projeto
 
-- **GerenciadorDeTarefas.Domain**: Entidades, DTOs, Validadores, Mapeadores, Interfaces e Regras de Negócio.
-- **GerenciadorDeTarefas.Infra.Data**: Contexto do EF Core, Mapeamentos, Repositórios e Migrations.
 - **GerenciadorDeTarefas.Api**: Controllers, Configurações e inicialização da aplicação.
-
+- **GerenciadorDeTarefas.Application**: DTOs, Validadores, Mapeadores, Interfaces dos Application Services e Regras de Negócio.
+- **GerenciadorDeTarefas.Domain**: Entidades, Interfaces de Repository e Regras de Negócio.
+- **GerenciadorDeTarefas.Infra.Data**: Contexto do EF Core, Mapeamentos, Repositórios e Migrations.
+- **GerenciadorDeTarefas.Test**: Classes de Testes de Unidade. **Em desenvolvimento** 
 ---
