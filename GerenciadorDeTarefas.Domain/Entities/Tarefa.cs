@@ -42,7 +42,6 @@ namespace GerenciadorDeTarefas.Domain.Entities
 
             Titulo = titulo;
             Descricao = descricao;
-            DataCriacao = dataCriacao;
             DataConclusao = dataConclusao;
             Status = (StatusTarefa)status;
         }

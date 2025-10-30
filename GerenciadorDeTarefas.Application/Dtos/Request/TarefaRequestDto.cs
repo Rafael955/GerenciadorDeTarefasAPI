@@ -19,8 +19,6 @@ namespace GerenciadorDeTarefas.Application.Dtos.Request
         [MaxLength(200, ErrorMessage = "A descrição da tarefa deverá ter no máximo {1} caracteres")]
         public string Descricao { get; set; }
 
-        public DateTime DataCriacao { get; set; }
-
         public DateTime? DataConclusao { get; set; }
 
         [Required(ErrorMessage = "Por favor, informe um status para a tarefa!")]

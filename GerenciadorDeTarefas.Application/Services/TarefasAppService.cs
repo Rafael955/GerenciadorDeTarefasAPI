@@ -11,9 +11,7 @@ namespace GerenciadorDeTarefas.Application.Services
     {
         public TarefaResponseDto CriarTarefa(TarefaRequestDto request)
         {
-            request.DataCriacao = DateTime.Now;
-
-            var tarefa = new Tarefa(request.Titulo, request.Descricao, request.DataCriacao, request.DataConclusao, request.Status);
+            var tarefa = new Tarefa(request.Titulo, request.Descricao, DateTime.UtcNow, request.DataConclusao, request.Status);
      
             tarefasRepository.Add(tarefa);
 
@@ -24,7 +22,7 @@ namespace GerenciadorDeTarefas.Application.Services
         {
             var tarefa = tarefasRepository.GetById(IdTarefa);
 
-            tarefa.AlterarTarefa(request.Titulo, request.Descricao, request.DataCriacao, request.DataConclusao, request.Status);
+            tarefa.AlterarTarefa(request.Titulo, request.Descricao, tarefa.DataCriacao, request.DataConclusao, request.Status);
 
             tarefasRepository.Update(tarefa);
 
