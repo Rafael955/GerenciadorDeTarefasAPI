@@ -19,14 +19,9 @@ namespace GerenciadorDeTarefas.Domain.Entities
         public StatusTarefa Status { get; private set; }
 
         // ✅ Construtor usado pelo EF
-        private Tarefa(int id, string titulo, string descricao, DateTime dataCriacao, DateTime? dataConclusao, StatusTarefa status)
+        private Tarefa()
         {
-            Id = id;
-            Titulo = titulo;
-            Descricao = descricao;
-            DataCriacao = dataCriacao;
-            DataConclusao = dataConclusao;
-            Status = status;
+            
         }
 
         // ✅ Construtor usado pela aplicação (DTO → Entidade)
